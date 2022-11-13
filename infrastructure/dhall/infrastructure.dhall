@@ -1,5 +1,7 @@
-let certManager = ./certManager.dhall
+let certManager = (./imports.dhall).certManager
 
-in  [ certManager.letsencryptStagingIssuer
-    , certManager.letsencryptProductionIssuer
-    ]
+let certManagerResources = ./certManager/resources.dhall
+
+let Resource = ./resourceUnion.dhall
+
+in  certManagerResources : List Resource

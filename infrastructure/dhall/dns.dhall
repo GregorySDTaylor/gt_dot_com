@@ -1,0 +1,3 @@
+{
+    host = "gregorysdtaylor.com"
+}

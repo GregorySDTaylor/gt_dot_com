@@ -5,6 +5,6 @@
     https://raw.githubusercontent.com/dhall-lang/dhall-kubernetes/v6.0.0/package.dhall
       sha256:532e110f424ea8a9f960a13b2ca54779ddcac5d5aa531f86d82f41f8f18d7ef1
 , certManager =
-    https://raw.githubusercontent.com/GregorySDTaylor/dhall-cert-manager/main/package.dhall
-      sha256:5ce2fb17976562df39a75ddd684e58120d06a1de21bd9634cdd299062dfc1a21
+    https://raw.githubusercontent.com/GregorySDTaylor/dhall-cert-manager/v0.1.0/package.dhall
+      sha256:021108668e85f60e22b2485378ab664ed9366e1f1ac691b7f63735c75b5e3171
 }

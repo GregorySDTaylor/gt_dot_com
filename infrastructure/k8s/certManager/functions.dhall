@@ -1,10 +1,10 @@
-let certManager = (../imports.dhall).certManager
+let certManager = (../../imports.dhall).certManager
 
-let k8s = (../imports.dhall).k8s
+let k8s = (../../imports.dhall).k8s
 
-let context = ../context.dhall
+let context = ../../context.dhall
 
-let dns = ../dns.dhall
+let dns = ../../dns.dhall
 
 in  { defaultACMEIssuer =
         \ ( args

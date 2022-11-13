@@ -1,4 +1,4 @@
-let certManager = (./imports.dhall).certManager
+let certManager = (../imports.dhall).certManager
 
 let certManagerResources = ./certManager/resources.dhall
 

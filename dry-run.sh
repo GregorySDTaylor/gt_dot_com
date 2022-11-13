@@ -1,2 +1,3 @@
 #!/bin/bash
-dhall-to-yaml --documents --file infrastructure/dhall/infrastructure.dhall > dry-run.yaml
+mkdir -p target
+dhall-to-yaml --documents --file infrastructure/k8s/resources.dhall > target/k8s-resources.yaml

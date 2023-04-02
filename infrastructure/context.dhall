@@ -1,5 +1,3 @@
-let dns = ./dns.dhall
-
 let version = "0.3.0"
 let namespace = "gt-homelab"
 

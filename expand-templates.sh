@@ -1,4 +1,7 @@
 #!/bin/bash
+mkdir -p target/text
+dhall text --file ./infrastructure/k8s/namespaceText.dhall > target/text/namespace
+
 mkdir -p target/k8s
 dhall-to-yaml --file infrastructure/k8s/namespaceForExport.dhall > target/k8s/namespace.yaml
 

@@ -1,5 +1,5 @@
 let certManagerResources = (./certManager/resources.dhall).resourceList
 
-let vaultResources = (./vault/resources.dhall).resourceList
+let sharedCertificateResources = (./sharedCertificate.dhall).resourceList
 
-in  certManagerResources # vaultResources
+in  certManagerResources # sharedCertificateResources

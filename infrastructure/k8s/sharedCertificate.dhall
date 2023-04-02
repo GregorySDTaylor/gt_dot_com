@@ -1,10 +1,10 @@
-let certManagerFunctions = ../certManager/functions.dhall
+let certManagerFunctions = ./certManager/functions.dhall
 
-let certManagerResources = ../certManager/resources.dhall
+let certManagerResources = ./certManager/resources.dhall
 
-let Resource = ../resourceUnion.dhall
+let Resource = ./resourceUnion.dhall
 
-let namespace = (../resources.dhall).sharedNamespace
+let namespace = (./resources.dhall).sharedNamespace
 
 let letsencryptCertificate =
       certManagerFunctions.defaultLetsencryptCertificate

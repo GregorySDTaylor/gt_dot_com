@@ -2,7 +2,7 @@ let dns = ../dns.dhall
 
 let IngressTLS = (../imports.dhall).k8s.IngressTLS.Type
 
-let vaultResources = ../k8s/vault/resources.dhall
+let sharedCertificate = (../k8s/sharedCertificate.dhall).letsencryptCertificate
 
 in  { server =
       { ingress =
@@ -11,7 +11,7 @@ in  { server =
         , tls =
               [ { hosts = Some [ "*." ++ dns.host, dns.host ]
                 , secretName = Some
-                    vaultResources.letsencryptCertificate.spec.secretName
+                    sharedCertificate.spec.secretName
                 }
               ]
             : List IngressTLS

@@ -8,5 +8,6 @@ dhall-to-yaml --file infrastructure/k8s/namespaceForExport.dhall > target/k8s/na
 mkdir -p target/helm
 dhall-to-yaml --file infrastructure/helm/certManager.dhall > target/helm/certManager.yaml
 dhall-to-yaml --file infrastructure/helm/vault.dhall > target/helm/vault.yaml
-
 dhall-to-yaml --documents --file infrastructure/k8s/resourcesForExport.dhall > target/k8s/resources.yaml
+dhall-to-yaml --file infrastructure/helm/postgresql.dhall > target/helm/postgresql.yaml
+dhall-to-yaml --file infrastructure/helm/pgadmin4.dhall > target/helm/pgadmin4.yaml

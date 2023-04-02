@@ -6,20 +6,37 @@ let context = ../../context.dhall
 
 let dns = ../../dns.dhall
 
-in  { defaultACMEIssuer =
+in  { secretForAcmeIssuer =
+        \ ( args
+          : { issuer : certManager.Issuer.Type, namespace : k8s.Namespace.Type }
+          ) ->
+          k8s.Secret::{
+          , metadata = k8s.ObjectMeta::{
+            , name = Some
+                ( merge
+                    { None = "issuer", Some = \(name : Text) -> name }
+                    args.issuer.metadata.name
+                )
+            , namespace = args.namespace.metadata.name
+            , labels = Some [ context.versionLabel ]
+            }
+          }
+    , defaultACMEIssuer =
         \ ( args
           : { name : Text
             , server : Text
             , email : Text
             , solver : certManager.ACMEChallengeSolver.Type
+            , namespace : k8s.Namespace.Type
             }
           ) ->
             certManager.Issuer::{
             , metadata = k8s.ObjectMeta::{
               , name = Some args.name
-              , namespace = Some context.namespace
+              , namespace = args.namespace.metadata.name
               , labels = Some [ context.versionLabel ]
               }
+            , kind = "ClusterIssuer"
             , spec =
                 certManager.IssuerSpecUnion.Type.ACME
                   { acme = certManager.ACMEIssuer::{
@@ -47,11 +64,16 @@ in  { defaultACMEIssuer =
                   }
             }
     , defaultLetsencryptCertificate =
-        \(args : { name : Text, issuer : certManager.Issuer.Type }) ->
+        \ ( args
+          : { name : Text
+            , issuer : certManager.Issuer.Type
+            , namespace : k8s.Namespace.Type
+            }
+          ) ->
           certManager.Certificate::{
           , metadata = k8s.ObjectMeta::{
             , name = Some args.name
-            , namespace = Some context.namespace
+            , namespace = args.namespace.metadata.name
             , labels = Some [ context.versionLabel ]
             }
           , spec = certManager.CertificateSpec::{
@@ -61,6 +83,7 @@ in  { defaultACMEIssuer =
                   merge
                     { None = "certificate", Some = \(name : Text) -> name }
                     args.issuer.metadata.name
+              , kind = Some args.issuer.kind
               }
             , dnsNames = Some [ "*." ++ dns.host, dns.host ]
             }

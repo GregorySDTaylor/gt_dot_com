@@ -1,6 +1,10 @@
 let functions = ./functions.dhall
 
+let k8sFunctions = ../functions.dhall
+
 let Resource = ../resourceUnion.dhall
+
+let namespace = (../resources.dhall).sharedNamespace
 
 let cloudFlareAdministratorEmail = "GregorySDTaylor@gmail.com"
 
@@ -16,7 +20,12 @@ let letsencryptStagingIssuer =
         , server = "https://acme-v02.api.letsencrypt.org/directory"
         , email = cloudFlareAdministratorEmail
         , solver = cloudFlareDns01Solver
+        , namespace
         }
+
+let letsencryptStagingSecret =
+      functions.secretForAcmeIssuer
+        { issuer = letsencryptStagingIssuer, namespace }
 
 let letsencryptProductionIssuer =
       functions.defaultACMEIssuer
@@ -24,14 +33,17 @@ let letsencryptProductionIssuer =
         , server = "https://acme-v02.api.letsencrypt.org/directory"
         , email = cloudFlareAdministratorEmail
         , solver = cloudFlareDns01Solver
+        , namespace
         }
 
-let letsencryptCertificate =
-      functions.defaultLetsencryptCertificate
-        { name = "letsencrypt-certificate", issuer = letsencryptStagingIssuer }
+let letsencryptProductionSecret =
+      functions.secretForAcmeIssuer
+        { issuer = letsencryptProductionIssuer, namespace }
 
-in    [ Resource.Issuer letsencryptStagingIssuer
-      , Resource.Issuer letsencryptProductionIssuer
-      , Resource.Certificate letsencryptCertificate
-      ]
-    : List Resource
+in  { letsencryptProductionIssuer
+    , resourceList =
+          [ Resource.Issuer letsencryptStagingIssuer
+          , Resource.Issuer letsencryptProductionIssuer
+          ]
+        : List Resource
+    }

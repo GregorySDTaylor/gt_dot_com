@@ -1,7 +1,7 @@
-let certManager = (../imports.dhall).certManager
+let context = ../context.dhall
 
-let certManagerResources = ./certManager/resources.dhall
+let k8sFunctions = ./functions.dhall
 
-let Resource = ./resourceUnion.dhall
+let sharedNamespace = k8sFunctions.nameSpace { name = context.namespace }
 
-in  certManagerResources : List Resource
+in  { sharedNamespace }

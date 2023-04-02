@@ -1,7 +1,7 @@
 let dns = ./dns.dhall
 
-let version = "0.1.0-1"
+let version = "0.2.0"
 
-in  { namespace = "gt-dot-com"
+in  { namespace = "gt-homelab"
     , versionLabel = { mapKey = dns.host ++ "/version", mapValue = version }
     }
